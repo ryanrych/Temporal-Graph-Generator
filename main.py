@@ -17,14 +17,14 @@ def generateID():
     global ids
     global currID
 
-    if currID == 26:
+    if currID > 25:
         for i in range(26):
             ids[i] = ids[i][0] + str(int(ids[i][1:]) + 1)
         currID = 1
         return ids[0]
     else:
         currID += 1
-        return ids[currID]
+        return ids[currID - 1]
 
 def resetIDs():
     global ids
@@ -65,19 +65,23 @@ def generateGraph(N, density, timeRange, count):
 
         resetIDs()
 
-        print("Graph %s Out:" % (q + 1))
         for i in range(N):
-            print('\t' + "Node " + str(i) + ":")
+            print("graphOut.push_back({", end = '')
             for j in range(len(adjOut[i])):
-                print('\t\t' + "Edge %s: " % (adjOut[i][j].id) + "Destination: %s " % (adjOut[i][j].child) + "Start Time: %s " % (adjOut[i][j].startTime) + "End Time: %s " % (adjOut[i][j].endTime) + "Weight: %s " % (adjOut[i][j].weight))
-            print()
-        print("Graph %s In:" % (q + 1))
+                edge = adjOut[i][j]
+                print("new Edge(%s, %s, %s, %s, %s, %s)," % (edge.weight, edge.startTime, edge.endTime, edge.parent, edge.child, edge.id), end = '')
+            print("});")
+
+        print()
+
         for i in range(N):
-            print('\t' + "Node " + str(i) + ":")
+            print("graphIn.push_back({", end='')
             for j in range(len(adjIn[i])):
-                print('\t\t' + "Edge %s: " % (adjIn[i][j].id) + "Destination: %s " % (adjIn[i][j].child) + "Start Time: %s " % (adjIn[i][j].startTime) + "End Time: %s " % (adjIn[i][j].endTime) + "Weight: %s " % (adjIn[i][j].weight))
+                edge = adjIn[i][j]
+                print("new Edge(%s, %s, %s, %s, %s, %s)," % (edge.weight, edge.startTime, edge.endTime, edge.parent, edge.child, edge.id), end='')
+            print("});")
         print()
         print()
         print()
 
-generateGraph(6,1.5,(0,8),1)
+generateGraph(3,1.5,(0,8),1)
