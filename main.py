@@ -65,23 +65,15 @@ def generateGraph(N, density, timeRange, count):
 
         resetIDs()
 
-        for i in range(N):
-            print("graphOut.push_back({", end = '')
+        file = open("Graph%s.txt"  % (q),"w")
+
+        file.write(str(N) + '\n')
+        for i in range(len(adjOut)):
             for j in range(len(adjOut[i])):
                 edge = adjOut[i][j]
-                print("new Edge(%s, %s, %s, %s, %s, %s)," % (edge.weight, edge.startTime, edge.endTime, edge.parent, edge.child, edge.id), end = '')
-            print("});")
+                line = str(edge.id) + ',' + str(edge.weight) + ',' + str(edge.startTime) + ',' + str(edge.endTime) + ',' + str(edge.parent) + ',' + str(edge.child)
+                file.write(line + '\n')
 
-        print()
+        file.close()
 
-        for i in range(N):
-            print("graphIn.push_back({", end='')
-            for j in range(len(adjIn[i])):
-                edge = adjIn[i][j]
-                print("new Edge(%s, %s, %s, %s, %s, %s)," % (edge.weight, edge.startTime, edge.endTime, edge.parent, edge.child, edge.id), end='')
-            print("});")
-        print()
-        print()
-        print()
-
-generateGraph(3,1.5,(0,8),1)
+generateGraph(19700,2.23350254,(0,24),1)
